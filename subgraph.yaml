@@ -1,6 +1,6 @@
 specVersion: 0.0.2
-description: Uniswap is a decentralized protocol for automated token exchange on Ethereum.
-repository: https://github.com/Uniswap/uniswap-v2-subgraph
+description: LuaSwap is a decentralized protocol for automated token exchange on Ethereum.
+repository: https://github.com/tomochain/luaswap-subgraph
 schema:
   file: ./schema.graphql
 dataSources:
@@ -8,9 +8,9 @@ dataSources:
     name: Factory
     network: mainnet
     source:
-      address: '0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f'
+      address: '0x0160835743D9bbd788321dfEff9f58F231677d6A'
       abi: Factory
-      startBlock: 10000834
+      startBlock: 11110218
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.3
