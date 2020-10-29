@@ -67,7 +67,7 @@ export function getEthPriceInUSD(): BigDecimal {
               .times(luaWeight)
               .plus(wethPriceBasedOnTomo.times(tomoWeight))
   } else {
-    return ZERO_BD
+    return BigDecimal.fromString('400')
   }
   
 }
