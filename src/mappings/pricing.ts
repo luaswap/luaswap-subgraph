@@ -11,10 +11,10 @@ const WETH_ADDRESS = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
 // End Old code calculate eth price in usd
 
 // TODO: Need to change when deploy new contract
-const LUA_WETH_PAIR = '0x65FaBAF7e6c5380243E063D8559d84e589Db6438'
-const TOMO_WETH_PAIR = '0x7885e359a085372EbCF1ed6829402f149D02c600'
-const TOMO_USDC_PAIR = '0xB10C1840f562f0ac914DA2bad3290833C75fdddF'
-const LUA_USDC_PAIR = '0x96258BB42779Bf300cf69c9B5bD2Ba5245CB4bc4'
+const LUA_WETH_PAIR = '0x65fabaf7e6c5380243e063d8559d84e589db6438'
+const TOMO_WETH_PAIR = '0x7885e359a085372ebcf1ed6829402f149d02c600'
+const TOMO_USDC_PAIR = '0xb10c1840f562f0ac914da2bad3290833c75fdddf'
+const LUA_USDC_PAIR = '0x96258bb42779bf300cf69c9b5bd2ba5245cb4bc4'
 
 export function getEthPriceInUSD(): BigDecimal {
   // TODO: Old code calculate eth price in usd
