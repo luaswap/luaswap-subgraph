@@ -9,7 +9,7 @@ import { Factory as FactoryContract } from '../types/templates/Pair/Factory'
 export const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000'
 
 // TODO: Change uniswap's factory address to luaswap's factory address
-export const FACTORY_ADDRESS = '0x0388C1E0f210AbAe597B7DE712B9510C6C36C857'
+export const FACTORY_ADDRESS = '0x1BA0DdCa35e152bE46e85e1EF9Db22d431dDc95e'
 
 export let ZERO_BI = BigInt.fromI32(0)
 export let ONE_BI = BigInt.fromI32(1)
@@ -83,6 +83,13 @@ export function fetchTokenSymbol(tokenAddress: Address): string {
   }
 
   return symbolValue
+
+  // log.info('Start method: {}', ["contract.symbol()"])
+  // let contract = TRC20.bind(tokenAddress)
+  // let symbolValue = contract.symbol()
+  // log.info('End method: {}', ["contract.symbol()"])
+
+  // return symbolValue
 }
 
 export function fetchTokenName(tokenAddress: Address): string {

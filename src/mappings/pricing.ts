@@ -74,11 +74,10 @@ export function getEthPriceInUSD(): BigDecimal {
 
 // token where amounts should contribute to tracked volume and liquidity
 let WHITELIST: string[] = [
-  '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2', // WETH
-  '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48', // USDC
-  '0xdac17f958d2ee523a2206206994597c13d831ec7', // USDT
-  '0x05d3606d5c81eb9b7b18530995ec9b29da05faba', // TOMOE
-  '0xb1f66997a5760428d3a87d68b90bfe0ae64121cc', // LUA
+  '0xf55F13Fde623c00d6b0C7bfc6557735040aA6a08', // ETH
+  '0xB837c744A16A7f133A750254270Dce792dBBAE77', // WTOMOE
+  '0x11c2cAF973db997b8a9b5689b33962E1AedEA968', // BTC
+  '0xc7ecCc9da22aBAAf9cfe311BFD9a55437eA05c2c' // USDT
 ]
 
 // minimum liquidity required to count towards tracked volume for pairs with small # of Lps
