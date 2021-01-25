@@ -9,7 +9,7 @@ import { Factory as FactoryContract } from '../types/templates/Pair/Factory'
 export const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000'
 
 // TODO: Change uniswap's factory address to luaswap's factory address
-export const FACTORY_ADDRESS = '0x1BA0DdCa35e152bE46e85e1EF9Db22d431dDc95e'
+export const FACTORY_ADDRESS = '0x28c79368257CD71A122409330ad2bEBA7277a396'
 
 export let ZERO_BI = BigInt.fromI32(0)
 export let ONE_BI = BigInt.fromI32(1)

@@ -3,7 +3,8 @@ import { Pair, Token, Bundle } from '../types/schema'
 import { BigDecimal, Address, BigInt } from '@graphprotocol/graph-ts/index'
 import { ZERO_BD, factoryContract, ADDRESS_ZERO, ONE_BD } from './helpers'
 
-const WETH_ADDRESS = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+// TODO: CHANGE if run on tomochain
+const WETH_ADDRESS = '0x2eaa73bd0db20c64f53febea7b5f5e5bccc7fb8b'
 // TODO: Old code calculate eth price in usd
 // const USDC_WETH_PAIR = '0xb4e16d0168e52d35cacd2c6185b44281ec28c9dc' // created 10008355
 // const DAI_WETH_PAIR = '0xa478c2975ab1ea89e8196811f51a7b7ade33eb11' // created block 10042267
@@ -11,10 +12,10 @@ const WETH_ADDRESS = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
 // End Old code calculate eth price in usd
 
 // TODO: Need to change when deploy new contract
-const LUA_WETH_PAIR = '0x65fabaf7e6c5380243e063d8559d84e589db6438'
-const TOMO_WETH_PAIR = '0x7885e359a085372ebcf1ed6829402f149d02c600'
-const TOMO_USDC_PAIR = '0xb10c1840f562f0ac914da2bad3290833c75fdddf'
-const LUA_USDC_PAIR = '0x96258bb42779bf300cf69c9b5bd2ba5245cb4bc4'
+const LUA_WETH_PAIR = '0x54a12b95a207e7db77cac8b7cdfcd5e90168187d'
+const TOMO_WETH_PAIR = '0x75f1b142eebc21d7e118eb67cac7f062ab1fc761'
+const TOMO_USDT_PAIR = '0x347f551eaba062167779c9c336aa681526857b81'
+const LUA_USDT_PAIR = '0x08975663ac228c6d208fa32c968569e5939fb634'
 
 export function getEthPriceInUSD(): BigDecimal {
   // TODO: Old code calculate eth price in usd
@@ -49,35 +50,36 @@ export function getEthPriceInUSD(): BigDecimal {
 
   // fetch eth prices for each pairs
   let luaWethPair = Pair.load(LUA_WETH_PAIR) // weth is token1
-  let luaUsdcPair = Pair.load(LUA_USDC_PAIR) // usdc is token0
+  let luaUsdtPair = Pair.load(LUA_USDT_PAIR) // usdc is token0
   
   let tomoWethPair = Pair.load(TOMO_WETH_PAIR) // weth is token1
-  let tomoUsdcPair = Pair.load(TOMO_USDC_PAIR) // usdc is token1
+  let tomoUsdtPair = Pair.load(TOMO_USDT_PAIR) // usdc is token1
 
-  if(luaWethPair != null && luaUsdcPair != null
-    && tomoWethPair != null && tomoUsdcPair != null) {
+  if(luaWethPair != null && luaUsdtPair != null
+    && tomoWethPair != null && tomoUsdtPair != null) {
 
       let totalLiquidityETH = luaWethPair.reserve1.plus(tomoWethPair.reserve1)
       let luaWeight = luaWethPair.reserve1.div(totalLiquidityETH)
       let tomoWeight = tomoWethPair.reserve1.div(totalLiquidityETH)
-      let wethPriceBasedOnLua = luaWethPair.token0Price.times(luaUsdcPair.token0Price)
-      let wethPriceBasedOnTomo = tomoWethPair.token0Price.times(tomoUsdcPair.token1Price)
+      let wethPriceBasedOnLua = luaWethPair.token0Price.times(luaUsdtPair.token0Price)
+      let wethPriceBasedOnTomo = tomoWethPair.token0Price.times(tomoUsdtPair.token1Price)
     
       return wethPriceBasedOnLua
               .times(luaWeight)
               .plus(wethPriceBasedOnTomo.times(tomoWeight))
   } else {
-    return BigDecimal.fromString('400')
+    return BigDecimal.fromString('1300')
   }
   
 }
 
 // token where amounts should contribute to tracked volume and liquidity
 let WHITELIST: string[] = [
-  '0xf55F13Fde623c00d6b0C7bfc6557735040aA6a08', // ETH
-  '0xB837c744A16A7f133A750254270Dce792dBBAE77', // WTOMOE
-  '0x11c2cAF973db997b8a9b5689b33962E1AedEA968', // BTC
-  '0xc7ecCc9da22aBAAf9cfe311BFD9a55437eA05c2c' // USDT
+  '0x2eaa73bd0db20c64f53febea7b5f5e5bccc7fb8b', // ETH
+  '0xb1f66997a5760428d3a87d68b90bfe0ae64121cc', // WTOMOE
+  '0xae44807d8a9ce4b30146437474ed6faaafa1b809', // BTC
+  '0x7262fa193e9590b2e075c3c16170f3f2f32f5c74', // LUA
+  '0x381b31409e4d220919b2cff012ed94d70135a59e' // USDT
 ]
 
 // minimum liquidity required to count towards tracked volume for pairs with small # of Lps
