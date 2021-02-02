@@ -12,10 +12,10 @@ const WETH_ADDRESS = '0x2eaa73bd0db20c64f53febea7b5f5e5bccc7fb8b'
 // End Old code calculate eth price in usd
 
 // TODO: Need to change when deploy new contract
-const LUA_WETH_PAIR = '0x54a12b95a207e7db77cac8b7cdfcd5e90168187d'
-const TOMO_WETH_PAIR = '0x75f1b142eebc21d7e118eb67cac7f062ab1fc761'
-const TOMO_USDT_PAIR = '0x347f551eaba062167779c9c336aa681526857b81'
-const LUA_USDT_PAIR = '0x08975663ac228c6d208fa32c968569e5939fb634'
+const WETH_LUA_PAIR = '0x54a12b95a207e7db77cac8b7cdfcd5e90168187d'
+const WETH_TOMO_PAIR = '0x75f1b142eebc21d7e118eb67cac7f062ab1fc761'
+const USDT_TOMO_PAIR = '0x347f551eaba062167779c9c336aa681526857b81'
+const USDT_LUA_PAIR = '0x08975663ac228c6d208fa32c968569e5939fb634'
 
 export function getEthPriceInUSD(): BigDecimal {
   // TODO: Old code calculate eth price in usd
@@ -49,20 +49,20 @@ export function getEthPriceInUSD(): BigDecimal {
   // End Old code calculate eth price in usd
 
   // fetch eth prices for each pairs
-  let luaWethPair = Pair.load(LUA_WETH_PAIR) // weth is token1
-  let luaUsdtPair = Pair.load(LUA_USDT_PAIR) // usdc is token0
+  let wethLuaPair = Pair.load(WETH_LUA_PAIR) // weth is token0
+  let usdtLuaPair = Pair.load(USDT_LUA_PAIR) // usdt is token0
   
-  let tomoWethPair = Pair.load(TOMO_WETH_PAIR) // weth is token1
-  let tomoUsdtPair = Pair.load(TOMO_USDT_PAIR) // usdc is token1
+  let wethTomoPair = Pair.load(WETH_TOMO_PAIR) // weth is token0
+  let usdtTomoPair = Pair.load(USDT_TOMO_PAIR) // usdt is token0
 
-  if(luaWethPair != null && luaUsdtPair != null
-    && tomoWethPair != null && tomoUsdtPair != null) {
+  if(wethLuaPair != null && usdtLuaPair != null
+    && wethTomoPair != null && usdtTomoPair != null) {
 
-      let totalLiquidityETH = luaWethPair.reserve1.plus(tomoWethPair.reserve1)
-      let luaWeight = luaWethPair.reserve1.div(totalLiquidityETH)
-      let tomoWeight = tomoWethPair.reserve1.div(totalLiquidityETH)
-      let wethPriceBasedOnLua = luaWethPair.token0Price.times(luaUsdtPair.token0Price)
-      let wethPriceBasedOnTomo = tomoWethPair.token0Price.times(tomoUsdtPair.token1Price)
+      let totalLiquidityETH = wethLuaPair.reserve0.plus(wethTomoPair.reserve0)
+      let luaWeight = wethLuaPair.reserve0.div(totalLiquidityETH)
+      let tomoWeight = wethTomoPair.reserve0.div(totalLiquidityETH)
+      let wethPriceBasedOnLua = wethLuaPair.token1Price.times(usdtLuaPair.token0Price)
+      let wethPriceBasedOnTomo = wethTomoPair.token1Price.times(usdtTomoPair.token0Price)
     
       return wethPriceBasedOnLua
               .times(luaWeight)
