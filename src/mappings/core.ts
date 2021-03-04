@@ -1,4 +1,3 @@
-import { PairHourData } from './../types/schema'
 /* eslint-disable prefer-const */
 import { BigInt, BigDecimal, store, Address } from '@graphprotocol/graph-ts'
 import {
@@ -6,9 +5,6 @@ import {
   Token,
   UniswapFactory,
   Transaction,
-  UniswapDayData,
-  PairDayData,
-  TokenDayData,
   Mint as MintEvent,
   Burn as BurnEvent,
   Swap as SwapEvent,
@@ -492,6 +488,7 @@ export function handleSwap(event: Swap): void {
   swap.amount0Out = amount0Out
   swap.amount1Out = amount1Out
   swap.to = event.params.to
+  swap.from = event.transaction.from
   swap.logIndex = event.logIndex
   // use the tracked amount if we have it
   swap.amountUSD = trackedAmountUSD === ZERO_BD ? derivedAmountUSD : trackedAmountUSD
