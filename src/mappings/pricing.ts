@@ -4,7 +4,7 @@ import { BigDecimal, Address, BigInt } from '@graphprotocol/graph-ts/index'
 import { ZERO_BD, factoryContract, ADDRESS_ZERO, ONE_BD } from './helpers'
 
 // TODO: CHANGE if run on tomochain
-const WETH_ADDRESS = '0x2eaa73bd0db20c64f53febea7b5f5e5bccc7fb8b'
+const WETH_ADDRESS = '0xb1f66997a5760428d3a87d68b90bfe0ae64121cc' // WETH on tomochain
 // TODO: Old code calculate eth price in usd
 // const USDC_WETH_PAIR = '0xb4e16d0168e52d35cacd2c6185b44281ec28c9dc' // created 10008355
 // const DAI_WETH_PAIR = '0xa478c2975ab1ea89e8196811f51a7b7ade33eb11' // created block 10042267
@@ -12,10 +12,7 @@ const WETH_ADDRESS = '0x2eaa73bd0db20c64f53febea7b5f5e5bccc7fb8b'
 // End Old code calculate eth price in usd
 
 // TODO: Need to change when deploy new contract
-const WETH_LUA_PAIR = '0x54a12b95a207e7db77cac8b7cdfcd5e90168187d'
-const WETH_TOMO_PAIR = '0x75f1b142eebc21d7e118eb67cac7f062ab1fc761'
 const USDT_TOMO_PAIR = '0x347f551eaba062167779c9c336aa681526857b81'
-const USDT_LUA_PAIR = '0x08975663ac228c6d208fa32c968569e5939fb634'
 
 export function getEthPriceInUSD(): BigDecimal {
   // TODO: Old code calculate eth price in usd
@@ -49,33 +46,19 @@ export function getEthPriceInUSD(): BigDecimal {
   // End Old code calculate eth price in usd
 
   // fetch eth prices for each pairs
-  let wethLuaPair = Pair.load(WETH_LUA_PAIR) // weth is token0
-  let usdtLuaPair = Pair.load(USDT_LUA_PAIR) // usdt is token0
-  
-  let wethTomoPair = Pair.load(WETH_TOMO_PAIR) // weth is token0
-  let usdtTomoPair = Pair.load(USDT_TOMO_PAIR) // usdt is token0
+  let usdtTomoPair = Pair.load(USDT_TOMO_PAIR) // usdt is token0, tomo is token1
 
-  if(wethLuaPair != null && usdtLuaPair != null
-    && wethTomoPair != null && usdtTomoPair != null) {
-
-      let totalLiquidityETH = wethLuaPair.reserve0.plus(wethTomoPair.reserve0)
-      let luaWeight = wethLuaPair.reserve0.div(totalLiquidityETH)
-      let tomoWeight = wethTomoPair.reserve0.div(totalLiquidityETH)
-      let wethPriceBasedOnLua = wethLuaPair.token1Price.times(usdtLuaPair.token0Price)
-      let wethPriceBasedOnTomo = wethTomoPair.token1Price.times(usdtTomoPair.token0Price)
-    
-      return wethPriceBasedOnLua
-              .times(luaWeight)
-              .plus(wethPriceBasedOnTomo.times(tomoWeight))
+  if(usdtTomoPair != null) {
+      return usdtTomoPair.token0Price
   } else {
-    return BigDecimal.fromString('1300')
+    return BigDecimal.fromString('2')
   }
   
 }
 
 // token where amounts should contribute to tracked volume and liquidity
 let WHITELIST: string[] = [
-  '0x2eaa73bd0db20c64f53febea7b5f5e5bccc7fb8b', // ETH
+  '0xa1ff8559646a79e47ecdfaca60272f3081998569', // TomoChain-ETH
   '0xb1f66997a5760428d3a87d68b90bfe0ae64121cc', // WTOMOE
   '0xae44807d8a9ce4b30146437474ed6faaafa1b809', // BTC
   '0x7262fa193e9590b2e075c3c16170f3f2f32f5c74', // LUA
